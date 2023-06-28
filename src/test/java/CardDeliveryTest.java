@@ -44,6 +44,6 @@ public class CardDeliveryTest {
         $(".checkbox__text").click();
         $(".button__text").click();
         Thread.sleep(15000);
-        $(".notification__content").shouldHave(exactText("Встреча успешно забронирована на " + data()));
+        $(".notification__content").shouldHave(exactText("Встреча успешно забронирована на " + actualData()));
     }
 }

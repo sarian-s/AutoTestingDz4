@@ -2,6 +2,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -25,6 +26,13 @@ public class CardDeliveryTest {
 
     return newDate;
     }
+    public String data() {
+    Calendar calendar = Calendar.getInstance();
+    Date date = calendar.getTime();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+    String newDate = dateFormat.format(date);
+    return newDate;
+    }
     @Test
     public void sendingCompletedForm() throws InterruptedException {
 
@@ -36,6 +44,6 @@ public class CardDeliveryTest {
         $(".checkbox__text").click();
         $(".button__text").click();
         Thread.sleep(15000);
-        $(".notification__content").shouldHave(exactText("Встреча успешно забронирована на " + actualData()));
+        $(".notification__content").shouldHave(exactText("Встреча успешно забронирована на " + data()));
     }
 }

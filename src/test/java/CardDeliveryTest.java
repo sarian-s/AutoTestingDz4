@@ -2,7 +2,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -16,34 +18,39 @@ public class CardDeliveryTest {
     public void openUrl(){
         open("http://localhost:9999");
     }
-    public String actualData() {
-    Calendar calendar = Calendar.getInstance();
-    calendar.add(Calendar.DATE, 10);
-    Date date = calendar.getTime();
 
-    SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-    String newDate = dateFormat.format(date);
-
-    return newDate;
+//    public String actualData() {
+//    Calendar calendar = Calendar.getInstance();
+//    calendar.add(Calendar.DATE, 10);
+//    Date date = calendar.getTime();
+//
+//    SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+//    String newDate = dateFormat.format(date);
+//
+//    return newDate;
+//    }
+//    public String data() {
+//    Calendar calendar = Calendar.getInstance();
+//    Date date = calendar.getTime();
+//    SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+//    String newDate = dateFormat.format(date);
+//    return newDate;
+//    }
+    public String generateDate(int days) {
+        return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     }
-    public String data() {
-    Calendar calendar = Calendar.getInstance();
-    Date date = calendar.getTime();
-    SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-    String newDate = dateFormat.format(date);
-    return newDate;
-    }
+    String planningDate = generateDate(5);
     @Test
-    public void sendingCompletedForm() throws InterruptedException {
+    public void sendingCompletedForm() throws InterruptedException{
 
         $("[data-test-id=city]").$("[type=text]").setValue("Сыктывкар");
         $("[data-test-id=date]").$("[class=input__control]").doubleClick().sendKeys(BACK_SPACE);
-        $("[data-test-id=date]").$("[class=input__control]").setValue(actualData());
+        $("[data-test-id=date]").$("[class=input__control]").setValue(planningDate);
         $("[name=name]").setValue("Петров Николай");
         $("[name=phone]").setValue("+12345678900");
         $(".checkbox__text").click();
         $(".button__text").click();
-        Thread.sleep(15000);
-        $(".notification__content").shouldHave(exactText("Встреча успешно забронирована на " + actualData()));
+        Thread.sleep(14000);
+        $(".notification__content").shouldHave(exactText("Встреча успешно забронирована на " + planningDate));
     }
 }

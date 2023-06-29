@@ -17,11 +17,11 @@ import static org.openqa.selenium.Keys.BACK_SPACE;
 
 public class CardDeliveryTest {
     @BeforeEach
-    public void openUrl(){
+    public void openUrl() {
         open("http://localhost:9999");
     }
 
-//    public String actualData() {
+    //    public String actualData() {
 //    Calendar calendar = Calendar.getInstance();
 //    calendar.add(Calendar.DATE, 10);
 //    Date date = calendar.getTime();
@@ -41,10 +41,12 @@ public class CardDeliveryTest {
     public String generateDate(int days) {
         return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     }
+
     String planningDate = generateDate(5);
+
     @Test
-    public void sendingCompletedForm() //throws InterruptedException
-    {
+    public void sendingCompletedForm() {//throws InterruptedException
+
 
         $("[data-test-id=city]").$("[type=text]").setValue("Сыктывкар");
         $("[data-test-id=date]").$("[class=input__control]").doubleClick().sendKeys(BACK_SPACE);

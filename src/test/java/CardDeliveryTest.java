@@ -2,6 +2,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -9,6 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import static com.codeborne.selenide.Condition.exactText;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static org.openqa.selenium.Keys.BACK_SPACE;
@@ -41,7 +43,8 @@ public class CardDeliveryTest {
     }
     String planningDate = generateDate(5);
     @Test
-    public void sendingCompletedForm() throws InterruptedException{
+    public void sendingCompletedForm() //throws InterruptedException
+    {
 
         $("[data-test-id=city]").$("[type=text]").setValue("Сыктывкар");
         $("[data-test-id=date]").$("[class=input__control]").doubleClick().sendKeys(BACK_SPACE);
@@ -50,7 +53,8 @@ public class CardDeliveryTest {
         $("[name=phone]").setValue("+12345678900");
         $(".checkbox__text").click();
         $(".button__text").click();
-        Thread.sleep(14000);
+        //Thread.sleep(14000);
+        $(".notification__content").shouldBe(visible, Duration.ofSeconds(14));
         $(".notification__content").shouldHave(exactText("Встреча успешно забронирована на " + planningDate));
     }
 }
